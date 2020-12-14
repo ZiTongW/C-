@@ -64,25 +64,27 @@ int GetMineCount(char real_mine[ROWS][COLS], int i, int j)
 	//将字符转化成数字
 }
 
-void FindMine_plus(char real_mine[ROWS][COLS], char show_mine[ROWS][COLS], int i, int j)
+void FindMine_plus(char real_mine[ROWS][COLS], char show_mine[ROWS][COLS], int i, int j,int* pwin)
 {
 	while (i > 0 && i<ROWS && j>0 && j< COLS && real_mine[i][j] == '0' && show_mine[i][j] == '*')
 	{
 		if (GetMineCount(real_mine, i, j) == 0)
 		{
 			show_mine[i][j] = ' ';
-			FindMine_plus(real_mine, show_mine, i - 1, j);
-			FindMine_plus(real_mine, show_mine, i - 1, j + 1);
-			FindMine_plus(real_mine, show_mine, i, j + 1);
-			FindMine_plus(real_mine, show_mine, i + 1, j + 1);
-			FindMine_plus(real_mine, show_mine, i + 1, j);
-			FindMine_plus(real_mine, show_mine, i, j - 1);
-			FindMine_plus(real_mine, show_mine, i + 1, j - 1);
-			FindMine_plus(real_mine, show_mine, i - 1, j - 1);
+			(*pwin)++;
+			FindMine_plus(real_mine, show_mine, i - 1, j, pwin);
+			FindMine_plus(real_mine, show_mine, i - 1, j + 1, pwin);
+			FindMine_plus(real_mine, show_mine, i, j + 1, pwin);
+			FindMine_plus(real_mine, show_mine, i + 1, j + 1, pwin);
+			FindMine_plus(real_mine, show_mine, i + 1, j, pwin);
+			FindMine_plus(real_mine, show_mine, i, j - 1, pwin);
+			FindMine_plus(real_mine, show_mine, i + 1, j - 1, pwin);
+			FindMine_plus(real_mine, show_mine, i - 1, j - 1, pwin);
 		}
 		else
 		{
 			show_mine[i][j] = GetMineCount(real_mine, i, j) + '0';//将数字转化成字符
+			(*pwin)++;
 			break;
 		}
 	}
@@ -107,9 +109,8 @@ void FindMine(char real_mine[ROWS][COLS], char show_mine[ROWS][COLS], int row, i
 			}
 			else
 			{
-				FindMine_plus(real_mine, show_mine, i, j);
+				FindMine_plus(real_mine, show_mine, i, j,&win);
 				DisplayBoard(show_mine, row, col);
-				win++;
 			}
 		}
 		else

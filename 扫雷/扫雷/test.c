@@ -24,7 +24,7 @@ void game()
 	//DisplayBoard(real_mine, ROW, COL);
 	//²¼ÖÃÀ×
 	SetMine(real_mine, ROW, COL);
-	//DisplayBoard(real_mine, ROW, COL);
+	DisplayBoard(real_mine, ROW, COL);
 	//ÅÅ²éÀ×
 	FindMine(real_mine, show_mine, ROW, COL);
 }
